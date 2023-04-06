@@ -21,12 +21,13 @@ namespace AutomarketApi.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
-            var response = await _userService.Authenticate(model);
+            var result = await _userService.Authenticate(model);
 
-            if (response == null)
+            if (result == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            return await ReturnSuccess(response);
+
+            return await ReturnSuccess(result);
         }
 
         [HttpPost("register")]

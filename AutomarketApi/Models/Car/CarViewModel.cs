@@ -1,4 +1,5 @@
-﻿using AutomarketApi.Models.Enum;
+﻿using AutomarketApi.Models.Discussions;
+using AutomarketApi.Models.Enum;
 
 namespace AutomarketApi.Models.Car
 {
@@ -19,5 +20,7 @@ namespace AutomarketApi.Models.Car
         public DateTime DateCreate { get; set; }
 
         public TypeCar TypeCar { get; set; }
+
+        public Guid ChatId { get; set; }
     }
 }

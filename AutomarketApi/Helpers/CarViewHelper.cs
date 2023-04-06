@@ -17,7 +17,8 @@ namespace AutomarketApi.Helpers
                 Price = entity.Price,
                 Color= entity.Color,
                 DateCreate = entity.DateCreate,
-                TypeCar = entity.TypeCar
+                TypeCar = entity.TypeCar,
+                ChatId = entity.Chat.Id
             };
         }
 
@@ -32,7 +33,7 @@ namespace AutomarketApi.Helpers
                 Color = view.Color,
                 Price = view.Price,
                 DateCreate = view.DateCreate,
-                TypeCar = view.TypeCar
+                TypeCar = view.TypeCar,
             };
         }
     }

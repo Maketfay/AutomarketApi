@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomarketApi", "AutomarketApi.csproj", "{3B3AC987-B16F-42F5-8F43-31AF76385E09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomarketApi.Tests", "..\AutomarketApi.Tests\AutomarketApi.Tests.csproj", "{4E009FF5-8DC0-4A9D-89E9-E5F81975E868}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomarketApi.Tests", "..\AutomarketApi.Tests\AutomarketApi.Tests.csproj", "{4E009FF5-8DC0-4A9D-89E9-E5F81975E868}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

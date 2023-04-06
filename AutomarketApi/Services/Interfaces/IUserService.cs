@@ -5,7 +5,7 @@ namespace AutomarketApi.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<TokenViewModel> Authenticate(AuthenticateRequest model);
+        Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
 
         Task<TokenViewModel> GenerateTokenAsync(User user);
         Task<Result<Guid>> Register(UserCreateViewModel userModel);

@@ -1,8 +1,10 @@
 using AutomarketApi;
 using AutomarketApi.Configuration;
+using AutomarketApi.Connection;
 using AutomarketApi.Context;
 using AutomarketApi.Helpers;
 using AutomarketApi.Helpers.Interfaces;
+using AutomarketApi.Hubs;
 using AutomarketApi.Repositories;
 using AutomarketApi.Repositories.Interfaces;
 using AutomarketApi.Services.Implementation;
@@ -26,6 +28,8 @@ services.AddDbContext<ApplicationDbContext>(options => options.UseLazyLoadingPro
 
 services.AddCors();
 
+services.AddSignalR();
+
 
 services.AddScoped<IUnitOfWork,UnitOfWork>();
 services.AddScoped<ICarRepository, CarRepository>();
@@ -38,9 +42,11 @@ services.AddScoped<IRoleRepository, RoleRepository>();
 services.AddScoped<IChatRepository, ChatRepository>();
 services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IChatService, ChatService>();
-//services.AddScoped<IMessageService, MessageService>();
+services.AddScoped<IMessageService, MessageService>();
 services.AddScoped<IMessageRepository, MessageRepository>();
 services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
+
+services.AddSingleton<IDictionary<string, ChatConnection>>(opts => new Dictionary<string, ChatConnection>());
 
 services.AddAutoMapper(cfg =>
 {
@@ -67,6 +73,15 @@ services.AddAuthorization();
 
 services.AddSwaggerGen();
 
+services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+        builder.SetIsOriginAllowed(_ => true)
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
+});
+
 services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
@@ -82,16 +97,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors(x => x
-         .AllowAnyOrigin()
-         .AllowAnyMethod()
-         .AllowAnyHeader());
+
+app.UseCors();
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
 
+app.MapHub<ChatHub>("/chat");
 
 
 app.Run();

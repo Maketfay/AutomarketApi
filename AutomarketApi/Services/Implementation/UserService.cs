@@ -30,7 +30,7 @@ namespace AutomarketApi.Services.Implementation
             _roleRepository = roleRepository;
             _refreshTokenRepository = refreshTokenRepository;
         }
-        public async Task<TokenViewModel> Authenticate(AuthenticateRequest model)
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
             var users = await _userRepository.ReadAll();
             var user = users
@@ -44,7 +44,13 @@ namespace AutomarketApi.Services.Implementation
 
             var result = await GenerateTokenAsync(user);
 
-            return result;
+            var response = new AuthenticateResponse
+            {
+                Token = result,
+                UserId = user.Id
+            };
+
+            return response;
         }
 
         public async Task<TokenViewModel> GenerateTokenAsync(User user)

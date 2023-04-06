@@ -1,5 +1,6 @@
 ﻿using AutomarketApi.Filters.BL;
 using AutomarketApi.Models.Car;
+using AutomarketApi.Models.Discussions;
 using AutomarketApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +38,26 @@ namespace AutomarketApi.Controllers
 
             return Ok();
            // return Ok(new { PageSize = chatsResult.PageSize, TotalItemsCount = chatsResult.TotalItemsCount, Items = viewModel });
+        }
+
+        [Authorize]
+        [HttpGet("getMessages")]
+        public async Task<IActionResult> GetMessages(Guid chatId)
+        {
+            var chat = await _chatService.ReadAsync(chatId);
+            if (chat == null)
+                return BadRequest();
+            var viewModel = new List<MessageViewModel>();
+            foreach (var message in chat.Messages.OrderBy(message => message.SentDate))
+            {
+                viewModel.Add(new MessageViewModel
+                {
+                    Username = message.Sender.Username,
+                    Message = message.MessageText,
+                    SentDate = message.SentDate.ToString("f")
+                });
+            }
+            return Ok(viewModel);
         }
     }
 }
